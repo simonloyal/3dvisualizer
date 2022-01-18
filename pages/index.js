@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
-import Navigation2 from "./navigation2.js";
+import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
 import Menu from "@mui/material/Menu";
 import Fab from "@mui/material/Fab";
@@ -15,8 +15,6 @@ import mats from "../firebase/mats";
 const matsUpper = mats[1].materials;
 const matsLower = mats[0].materials;
 
-console.log('mats', matsLower)
-
 const useStyles = makeStyles({
   root: {
     marginTop: "30px",
@@ -25,8 +23,8 @@ const useStyles = makeStyles({
 });
 
 export default function Home() {
-  const [upper, setUpper] = useState(matsUpper[0].layer);
-  const [lower, setlower] = useState(matsLower[0].layer);
+  const [upper, setUpper] = useState("");
+  const [lower, setlower] = useState("");
 
   const classes = useStyles();
 
@@ -48,7 +46,6 @@ export default function Home() {
     setAnchorEl2(null);
   };
 
-
   const handleCloseUpper = (link) => {
     setAnchorEl(null);
     setUpper(link);
@@ -61,7 +58,7 @@ export default function Home() {
 
   return (
     <>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} className="ml-12">
         <Grid item xs={8}>
           <div className="mt-6 ml-16">
             <Fab variant="extended" onClick={handleClick2}>
@@ -78,17 +75,49 @@ export default function Home() {
               onClose={handleClose2}
               PaperProps={{
                 style: {
-                  width: "20ch",
+                  width: "30ch",
                 },
               }}
             >
+                  <Grid container spacing={2}>
+                    <Grid item>
+                      <Avatar
+                        alt="textura"
+                        src={baseimg}
+                        sx={{ width: 44, height: 44 }}
+                        s
+                      />
+                    </Grid>
+                    <Grid item>
+                      <MenuItem
+                        key='def'
+                        onClick={() => handleCloseLower('')}
+                      >
+                        Tanzania Silver
+                      </MenuItem>
+                    </Grid>
+                  </Grid>
               {matsLower.map((lower) => (
-                <MenuItem
-                  key={lower.layer}
-                  onClick={() => handleCloseLower(lower.layer)}
-                >
-                  {lower.name}
-                </MenuItem>
+                <>
+                  <Grid container spacing={2}>
+                    <Grid item>
+                      <Avatar
+                        alt="textura"
+                        src={lower.thumbnail}
+                        sx={{ width: 44, height: 44 }}
+                        s
+                      />
+                    </Grid>
+                    <Grid item>
+                      <MenuItem
+                        key={lower.layer}
+                        onClick={() => handleCloseLower(lower.layer)}
+                      >
+                        {lower.name}
+                      </MenuItem>
+                    </Grid>
+                  </Grid>
+                </>
               ))}
             </Menu>
           </div>
@@ -109,17 +138,31 @@ export default function Home() {
               onClose={handleClose}
               PaperProps={{
                 style: {
-                  width: "20ch",
+                  width: "30ch",
                 },
               }}
             >
               {matsUpper.map((option) => (
-                <MenuItem
-                  key={option.layer}
-                  onClick={() => handleCloseUpper(option.layer)}
-                >
-                  {option.name}
-                </MenuItem>
+                <>
+                  <Grid container spacing={2}>
+                    <Grid item>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src={option.thumbnail}
+                        sx={{ width: 44, height: 44 }}
+                        s
+                      />
+                    </Grid>
+                    <Grid item>
+                      <MenuItem
+                        key={option.layer}
+                        onClick={() => handleCloseUpper(option.layer)}
+                      >
+                        {option.name}
+                      </MenuItem>
+                    </Grid>
+                  </Grid>
+                </>
               ))}
             </Menu>
           </div>
